@@ -235,12 +235,12 @@ for neuron_type in population:
 print(f'Total: {counter}')
 
 # Exercise 19 - Mini Neural Population Analysis
-# We have a crecient population 
+# We have a growing population 
 
 population = ["sensory","motor","interneuron","motor","excitatory","interneuron","excitatory","interneuron","inhibitory","motor","excitatory","interneuron","inhibitory","motor","excitatory","inhibitory","sensory","motor"]
 
-# We need a program to do a population analysis.
-# Count how many neurons it's in the population, classify and enumerate them too. 
+# We need a program to analyze the population.
+# Count how many neurons are in the population and classify them by type. 
 
 # Counters
 sensory_counter = 0
@@ -260,7 +260,7 @@ for neuron_type in population:
         motor_counter += 1
     else:
         interneuron_counter += 1
-population_counter = (sensory_counter + inhibitory_counter + motor_counter + excitatory_counter + interneuron_counter) 
+population_counter = len(population)
 
 print(f'Sensory neurons: {sensory_counter}')
 print(f'Inhibitory neurons: {inhibitory_counter}')
@@ -269,3 +269,127 @@ print(f'Motor neurons: {motor_counter}')
 print(f'Interneurons: {interneuron_counter}')
 
 print(f'Total neurons in population: {population_counter}')
+
+# Exercise 20 - Experimental Neuron Population
+
+# Now we are goingto introduce a new concept: input()
+# Until now, we introduce data directly, but a interesting program should be to get information directly from the user.
+# input() → Make it possible // input("Enter a neuron type: ") 
+
+# Exercise 21 - Neuron Type Checker
+
+# The program should contain a population and ask the user which type of neuron they want to search for.
+# For example: "Enter a neuron type: motor"
+# Then, check whether that neuron type is in the population.
+# If it is not in the population, print "motor neuron not found".
+
+population = ["sensory", "excitatory", "inhibitory", "motor", "interneuron"]
+
+# to_find = input("Enter a neuron type: ")
+
+#if to_find in population: 
+#    print(f'{to_find} → found')
+#else:
+#    print(f'{to_find} → not found') 
+
+# Exercise 22 - Neuron type counter
+
+# We have a growing population: 
+# The user needs to search for and count how many neurons of a specific type are in the population.
+# Code ↓
+ 
+#population = ["sensory","excitatory","excitatory","inhibitory","motor","excitatory","interneuron","inhibitory","sensory","motor","excitatory"]
+#to_find = input("Enter a neuron type: ").lower()
+#counter = 0
+#
+#for neuron_type in population: 
+#    if to_find == neuron_type:
+#        counter +=1 
+#print(f'You have {counter} type of {to_find} neurons → ')
+    
+# Exercise 23 - Case-insensitive neuron search
+# Modify the previous exercise so that the user can type any combination of lowercase and uppercase letters.
+# For example: 'Enter a neuron type: iNhiBitorY'
+# You have 2 inhibitory neurons → .
+# Code ↑
+
+# Exercise 24 - Neuron Frequency Classification
+
+# Now our program needs to do something more similar to an analysis pipeline
+# We have a population and the user enters a neuron type:
+# You program should: 
+    # Any input should be converted to lowercase
+    # Count how many times this neuron type appears in the population.
+    # Classify the frequency: 0 → absent; 1-2 → rare; 3+ → common
+# Expected output: excitatory → 4 neurons → common
+
+# Inputs
+population = ["sensory","excitatory","sensory","excitatory","inhibitory","motor","excitatory","interneuron","inhibitory","sensory","motor","excitatory"]
+to_find = input('Enter a neuron type: ').lower()
+
+# Counters 
+sensory_counter = 0
+excitatory_counter = 0
+inhibitory_counter = 0
+interneuron_counter = 0
+motor_counter = 0
+others_counter = 0
+
+# Classifier 
+
+for neuron_type in population:
+    if neuron_type == "sensory":
+        sensory_counter += 1
+    elif neuron_type == "excitatory":
+        excitatory_counter += 1
+    elif neuron_type == "inhibitory":
+        inhibitory_counter += 1
+    elif neuron_type == "interneuron":
+        interneuron_counter += 1
+    elif neuron_type == "motor":
+        motor_counter += 1
+    else:
+        others_counter += 1
+
+if to_find == "sensory":
+    if sensory_counter == 0:
+        print(f'You have {sensory_counter} of sensory neurons → absent')
+    elif 1 <= sensory_counter <= 2:
+        print(f'You have {sensory_counter} of sensory neurons → rare')
+    else:
+        print(f'You have {sensory_counter} of sensory neurons → common')
+elif to_find == "excitatory":
+    if excitatory_counter == 0:
+        print(f'You have {excitatory_counter} of excitatory neurons → absent')
+    elif 1 <= excitatory_counter <= 2:
+        print(f'You have {excitatory_counter} of excitatory neurons → rare')
+    else:
+        print(f'You have {excitatory_counter} of excitatory neurons → common')
+elif to_find == "inhibitory":
+    if inhibitory_counter == 0:
+        print(f'You have {inhibitory_counter} of inhibitory neurons → absent')
+    elif 1 <= inhibitory_counter <= 2:
+        print(f'You have {inhibitory_counter} of inhibitory neurons → rare')
+    else:
+        print(f'You have {inhibitory_counter} of inhibitory neurons → common')
+elif to_find == "interneuron":
+    if interneuron_counter == 0:
+        print(f'You have {interneuron_counter} of interneuron neurons → absent')
+    elif 1 <= interneuron_counter <= 2:
+        print(f'You have {interneuron_counter} of interneuron neurons → rare')
+    else:
+        print(f'You have {interneuron_counter} of interneuron neurons → common')
+elif to_find == "motor" :
+    if motor_counter == 0:
+        print(f'You have {motor_counter} of motor neurons → absent')
+    elif 1 <= motor_counter <= 2:
+        print(f'You have {motor_counter} of motor neurons → rare')
+    else:
+        print(f'You have {motor_counter} of motor neurons → common')
+else: 
+    if others_counter == 0:
+        print(f'You have {others_counter} of {to_find} neurons → absent')
+    elif 1 <= others_counter <= 2:
+        print(f'You have {others_counter} of {to_find} neurons → rare')
+    else:
+        print(f'You have {others_counter} of {to_find} neurons → common')

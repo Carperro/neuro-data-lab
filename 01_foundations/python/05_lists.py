@@ -393,3 +393,5 @@ else:
         print(f'You have {others_counter} of {to_find} neurons → rare')
     else:
         print(f'You have {others_counter} of {to_find} neurons → common')
+
+# Luego de semejante monstruo condicional, toca aprender nuevas herramientas. 

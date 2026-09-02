@@ -223,24 +223,114 @@
 # Expected output:
 # The neuron type 'excitatory' appears 3 times → common
 
-population = ["sensory","excitatory","excitatory","inhibitory","motor","excitatory","interneuron","inhibitory"]    
-chosen_neuron = input('Enter a neuron type: ').lower()
+#population = ["sensory","excitatory","excitatory","inhibitory","motor","excitatory","interneuron","inhibitory"]    
+#chosen_neuron = input('Enter a neuron type: ').lower()
+#
+#def count_neurons(chosen_neuron):
+#    counter = 0
+#    for neuron_type in population:
+#        if neuron_type == chosen_neuron:
+#            counter += 1
+#    # Classifier
+#    if counter == 0:
+#        frequency = "absent"
+#    elif counter <= 2:
+#        frequency = "rare"
+#    else:
+#        frequency = "common"
+#    return counter, frequency
+#
+#total,frequency = count_neurons(chosen_neuron) 
+#print(total)
+#print(frequency)
 
-def count_neurons(chosen_neuron):
-    counter = 0
-    for neuron_type in population:
-        if neuron_type == chosen_neuron:
-            counter += 1
-    # Classifier
-    if counter == 0:
-        frequency = "absent"
-    elif counter <= 2:
-        frequency = "rare"
-    else:
-        frequency = "common"
-    return counter, frequency
+# Exercise 7 - Two Parameters + Validation
+# We have a neuron type and a signal strength.
+# The user introduces both values.
+# Create a function called analyze_neuron().
+# The function should:
+# 1. Receive two parameters:
+#       neuron_type
+#       signal_strength
+# 2. Check the neuron type:
+#       "excitatory" → valid
+#       "inhibitory" → valid
+#       anything else → invalid
+# 3. If the neuron type is valid:
+#       Display the neuron type and its signal strength.
+# 4. If the neuron type is invalid:
+#       Display an error message.
+# Outside the function:
+# 5. Ask the user for a neuron type.
+# 6. Ask the user for a signal strength.
+# 7. Pass both values to analyze_neuron().
 
-total,frequency = count_neurons(chosen_neuron) 
-print(total)
-print(frequency)
+# Expected output:
+# Enter a neuron type: excitatory
+# Enter signal strength: 80
+# Excitatory neuron → signal strength: 80
+
+# Another possible output:
+# Enter a neuron type: motor
+# Enter signal strength: 90
+# Invalid neuron type
+#neuron_type = input('Enter a neuron type: ').lower()
+#signal_strength = input('Enter a signal strength: ')
+#def analyze_neuron(neuron_type, signal_strength):
+#    if neuron_type == "inhibitory" or neuron_type == "excitatory":
+#        print(f'Neuron {neuron_type} → {signal_strength}')
+#    else: 
+#        print('Invalid parameters')
+#analyze_neuron(neuron_type,signal_strength)
+    
+# Exercise 8 - Returning a classification
+
+# The user enters a neuron type and its signal strength.
+# Create a function called classify_signal().
+# The function should:
+# 1. Receive two parameters: neuron_type; signal_strength;
+# 2. If the neuron is "excitatory":signal >= 70 → "strong"; signal < 70  → "weak"
+# 3. If the neuron is "inhibitory": signal >= 40 → "strong" ;signal < 40  → "weak"
+# 4. Any other neuron type: "unknown"
+# 5. Return the classification.
+# Outside the function:
+# 6. Ask the user for the neuron type.
+# 7. Ask the user for the signal strength.
+# 8. Call the function with both values.
+# 9. Store the returned classification in a variable.
+# 10. Print the final result.
+# Expected output:
+# Enter a neuron type: excitatory
+# Enter a signal strength: 80
+# Neuron excitatory → strong
+
+neuron_type = input('Enter a neuron type: ').lower()
+signal_strength = int(input('Enter a signal strength: '))
+
+def classify_signal(neuron_type, signal_strength):
+    if neuron_type == "excitatory":
+        if signal_strength >= 70:
+            return "strong"
+        else:
+            return "weak"
+    elif neuron_type == "inhibitory":
+        if signal_strength >= 40:
+            return "strong"
+        else:
+            return "weak"
+    else: 
+        return "Unknown"
+    
+# Guardo el resultado de la función en una variable
+classification = classify_signal(neuron_type,signal_strength)   
+                   
+print(f"Neuron {neuron_type} → {classification}")
+
+neuron_types = ["excitatory","inhibitory","sensory","motor","interneuron"]
+
+for neuron in neuron_types:
+    if neuron == "excitatory":
+        print(neuron)
+    elif neuron == "inhibitory":
+        print(neuron)
 

@@ -48,7 +48,7 @@ for iteration_number in range(1, 11):
 #Measurement 2: 10 Hz → Moderate firing rate ...
 #Measurement 10: 50 Hz → High firing rate
 
-firing_rate = 3
+firing_rate = 4
 
 for measurement in range(1, 10 + 1): # 10 + 1 → To include 10 in the range.
     if firing_rate * measurement < 10:
@@ -62,7 +62,7 @@ for measurement in range(1, 10 + 1): # 10 + 1 → To include 10 in the range.
 # We have 10 neurons and we want to analyze their firing rate
 # Only healthy neurons should be analyzed
 
-firing_rate = 5
+firing_rate = 2
 
 for measurement in range(1, 10 + 1): # 10 + 1 → To include 10 in the range.
     firing_rate = measurement * firing_rate
@@ -129,7 +129,7 @@ else:
 # Print the firing rate together with the classification
 # For example: Firing rate: 25 Hz → Moderate
 
-firing_rate = 55
+firing_rate = 5
 
 if firing_rate < 10:
     print(f'Firing rate is: {firing_rate} Hz → Low')

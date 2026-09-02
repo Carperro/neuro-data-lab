@@ -39,11 +39,10 @@ neuron_types.append("interneuron")
 
 print(neuron_types)
 print(neuron_types[0])
-print(neuron_types[-1]) # Forma de llamar al último elemento de la lista
+print(neuron_types[-2]) # Forma de llamar al último elemento de la lista
 print(f"Número de items: {len(neuron_types)}")
 
 # Exercise 6 - List + 'for'
-
     #for item in list:      → Structure for iterations on lists
         #do_something(item) →
         

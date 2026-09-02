@@ -57,7 +57,7 @@
 
 # Excercise 13 - split() with arguments
 #neuron_data = "excitatory,inhibitory,sensory,motor"
-#print(neuron_data.split(',')) # → Acá utiliza como parámetro general el la , para separar los elementos
+#print(neuron_data.split(',')) # → Acá utiliza como parámetro general la (,) para separar los elementos
 
 # Exercise 14 - split() + for
 # We needs to print each type of neuron in a different line.

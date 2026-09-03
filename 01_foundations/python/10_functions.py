@@ -73,7 +73,7 @@ def analyze_signal(neuron_type,signal_strength):
             return "strong" 
         else:
             return "weak" 
-results = analyze_signal("excitatory",10)
+#results = analyze_signal("excitatory",10)
 
 # Exercise 5 — Multiple Returns
 # Create a function called classify_signal().
@@ -186,64 +186,96 @@ def get_neuron_info(neuron_type, firing_rate, signal_strength):
 #      """)
         
 # Exercise 8 - Neural Population Reporter
-neural_data = " EXCITATORY, inhibitory, sensory, motor, inhibitory, sensory, excitatory, motor, inhibitory"
+#neural_data = " EXCITATORY, inhibitory, sensory, motor, inhibitory, sensory, excitatory, motor, inhibitory"
 
-def analyze_population(neural_data):
-    neuron_list = neural_data.split(',')
-    population_total = len(neuron_list)
-    unique_neurons = dict()
-    for neuron in neuron_list:
-        neuron_cleaned = neuron.lower().strip()
-        if neuron_cleaned in unique_neurons:
-            unique_neurons[neuron_cleaned] += 1
-        else:
-            unique_neurons[neuron_cleaned] = 1
-    neuron_types = len(unique_neurons)
-    results = {
-        'neuron_counts': unique_neurons,
-        'population_total': population_total,
-        'neuron_types': neuron_types
+#def analyze_population(neural_data):
+#    neuron_list = neural_data.split(',')
+#    population_total = len(neuron_list)
+#    unique_neurons = dict()
+#    for neuron in neuron_list:
+#        neuron_cleaned = neuron.lower().strip()
+#        if neuron_cleaned in unique_neurons:
+#            unique_neurons[neuron_cleaned] += 1
+#        else:
+#            unique_neurons[neuron_cleaned] = 1
+#    neuron_types = len(unique_neurons)
+#    results = {
+#        'neuron_counts': unique_neurons,
+#        'population_total': population_total,
+#        'neuron_types': neuron_types
+#    }
+#    return results
+#
+#results = analyze_population(neural_data)
+#
+#def report_population(analyze_population_results):
+#    for neuron,counter in analyze_population_results['neuron_counts'].items():
+#        print(f"Neuron type: {neuron} → {counter}")
+#
+#report_population(results)
+
+# Exercise 9 - Neuron Signal Analyzer 
+# Create a function called analyze_neuron()
+    # The function should receive: neuron_type; firing_rate; signal_strength.
+    # singal_strength should have a default value of 50.
+# The function should:
+    # Determinate whether the signal is "strong" or "weak"
+    # For 'excitatory" neurons, a signal of 70 or higher is strong
+    # For 'inhibitory" neurons, a signal of 50 or higher is strong
+    # Return the result together with the neuron type.
+# Then call the function twice
+    # Once providing all three arguments
+    # Once providing only neuron_type and firing_rate
+# Print both returned results
+
+#def analyze_neuron(neuron_type, firing_rate, signal_strength=50):
+#    thresholds = {
+#        "excitatory": 70,
+#        "inhibitory": 50 
+#    }
+#    if signal_strength >= thresholds[neuron_type]:
+#        return "strong"
+#    else:
+#        return "weak" 
+#
+#results = analyze_neuron(neuron_type="inhibitory",firing_rate=100, signal_strength=10)
+#print(results)
+#results = analyze_neuron(neuron_type="inhibitory",firing_rate=10)
+#print(results)
+
+# Exercise 10 - Neural Threshold Database
+# Create a function called classify_neuron()
+# The function should receive: neuron_type, signal_strength
+# Create a dictionary containing the signal threshold for each neuron type:
+    # Excitatory → 70
+    # Inhibitory → 50
+    # Sensory → 40
+    # Motor → 60
+# The function should: 
+# Find the threshold corresponding to the given neuron_type
+# Compare it with signal_strength
+# Return a dictionary containing:
+    # the neuron type
+    # the signal strength
+    # the threshold
+    # the classification ("strong" or "weak")
+# Then call the function with at least three different neuron types and print the returned dictionaries
+
+def classify_neuron(neuron_type, signal_strength):          # Defino la función
+    signal_threshold = {                                    # Creo un diccionario que contiene los límites de señal para cada tipo de neurona
+        "excitatory": 70,
+        "inhibitory": 50,
+        "sensory": 40,
+        "motor": 60
     }
-    return results
-
-results = analyze_population(neural_data)
-
-def report_population(analyze_population_results):
-    for neuron,counter in analyze_population_results['neuron_counts'].items():
-        print(f"Neuron type: {neuron} → {counter}")
-
-report_population(results)
-
-from collections import Counter
-
-
-def analyze_population(neural_data: str) -> dict:
-    """Analyze neuron types from comma-separated neural data."""
-    neurons = [
-        neuron.strip().lower()
-        for neuron in neural_data.split(",")
-        if neuron.strip()
-    ]
-    neuron_counts = Counter(neurons)
-    return {
-        "neuron_counts": dict(neuron_counts),
-        "population_total": len(neurons),
-        "neuron_types": len(neuron_counts),
+    classify_results = {                                    # Creo otro diccionario que será el que retornará la función
+        'neuron_type': neuron_type,                         # Agrego los valores ya conocidos → Tipo de neurona a clasificar
+        'signal_strength': signal_strength,                 # Fuerza de la señal que tiene 
+        'threshold': signal_threshold[neuron_type],         # El límite p/cada tipo de neurona, obtengo el value asociado a la key neuron_type
     }
-
-def report_population(results: dict) -> None:
-    """Display a formatted neural population report."""
-    print("\n=== Neural Population Report ===")
-    print(f"Population total: {results['population_total']}")
-    print(f"Neuron types: {results['neuron_types']}")
-    print("\nNeuron counts:")
-    for neuron_type, count in results["neuron_counts"].items():
-        print(f"  - {neuron_type.capitalize()}: {count}")
-
-neural_data = (
-    " EXCITATORY, inhibitory, sensory, motor, "
-    "inhibitory, sensory, excitatory, motor, inhibitory"
-)
-results = analyze_population(neural_data)
-
-report_population(results)
+    if signal_strength >= signal_threshold[neuron_type]:    # Comparo la señal introducida, contra el value asignado en el diccionario de signal_threshold
+        classify_results["classification"] = "Strong"       # Añado al diccionario classify_results la clasificación, tanto key como value    
+    else:
+        classify_results["classification"] = "Weak"         # Añado al diccionario classify_results la clasificación, tanto key como value       
+    return classify_results                                 # Retorno el resultado, en este caso en forma de diccionario
+    

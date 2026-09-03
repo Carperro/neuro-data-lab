@@ -9,7 +9,7 @@
 def show_neuron_info():
     print(f'[!] Neuron detected.')
     print(f'[*] Analyzing neural signal...')
-#show_neuron_info()
+show_neuron_info()
 
 # Exercise 2 — Neuron Signal
 # Create a function called analyze_neuron().

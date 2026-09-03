@@ -123,9 +123,9 @@ def get_neuron_info(neuron_type, firing_rate, signal_strength):
         'signal_strength': signal_strength
     }
     return neuron_info
-# results = get_neuron_info("excitatory",75,90)
-# print(results)
-# print(results['neuron_type'])
+results = get_neuron_info("excitatory",75,90)
+print(results)
+print(results['neuron_type'])
 
 # Exercise 7 — Neural Population Analyzer
 # Create a function called analyze_population().
@@ -146,73 +146,73 @@ def get_neuron_info(neuron_type, firing_rate, signal_strength):
 # - Print the total number of neurons.
 # - Print the number of unique neuron types.
 # Use this data:
-#neural_data = " EXCITATORY, inhibitory, sensory, motor, inhibitory, sensory, excitatory, motor, inhibitory"
-#def analyze_population(neural_data):
-#    neuron_list = neural_data.split(',')
-#    population_total = len(neuron_list)
-#    unique_neurons = dict()
-#    for neuron in neuron_list:
-#        neuron_cleaned = neuron.lower().strip()
-#        if neuron_cleaned in unique_neurons:
-#            unique_neurons[neuron_cleaned] += 1
-#        else:
-#            unique_neurons[neuron_cleaned] = 1
-#    neuron_types = len(unique_neurons)
-#    results = {
-#        'neuron_counts': unique_neurons,
-#        'population_total': population_total,
-#        'neuron_types': neuron_types
-#    }
-#    return results
+neural_data = " EXCITATORY, inhibitory, sensory, motor, inhibitory, sensory, excitatory, motor, inhibitory"
+def analyze_population(neural_data):
+    neuron_list = neural_data.split(',')
+    population_total = len(neuron_list)
+    unique_neurons = dict()
+    for neuron in neuron_list:
+        neuron_cleaned = neuron.lower().strip()
+        if neuron_cleaned in unique_neurons:
+            unique_neurons[neuron_cleaned] += 1
+        else:
+            unique_neurons[neuron_cleaned] = 1
+    neuron_types = len(unique_neurons)
+    results = {
+        'neuron_counts': unique_neurons,
+        'population_total': population_total,
+        'neuron_types': neuron_types
+    }
+    return results
 
-#analyze_population_results = analyze_population(neural_data)
-# print(analyze_population_results) # → Imprimimos todo el resultado, que es un diccionario
-# print(analyze_population_results['neuron_types']) # → Accedemos a esa parte del diccionario que queremos saber específicamente
-# print(analyze_population_results['population_total']) # → Accedemos a esa parte del diccionario que queremos saber específicamente
-# print(analyze_population_results['neuron_counts']['inhibitory']) # → Accedemos a esa parte del diccionario que contiene otro diccionario
+analyze_population_results = analyze_population(neural_data)
+print(analyze_population_results) # → Imprimimos todo el resultado, que es un diccionario
+print(analyze_population_results['neuron_types']) # → Accedemos a esa parte del diccionario que queremos saber específicamente
+print(analyze_population_results['population_total']) # → Accedemos a esa parte del diccionario que queremos saber específicamente
+print(analyze_population_results['neuron_counts']['inhibitory']) # → Accedemos a esa parte del diccionario que contiene otro diccionario
 # Output printed ↓
-#print(f"""
-#            =======================================
-#                  NEURAL POPULATION ANALYZER
-#            =======================================
-#    [+] Population total            : {analyze_population_results['population_total']}
-#    [+] Neuron types                : {analyze_population_results['neuron_types']}
-#    [+] Neuron counts:
-#                - Excitatory        : {analyze_population_results['neuron_counts']['excitatory']}
-#                - Inhibitory        : {analyze_population_results['neuron_counts']['inhibitory']}
-#                - Sensory           : {analyze_population_results['neuron_counts']['sensory']}
-#                - Motor             : {analyze_population_results['neuron_counts']['motor']}
-#            =======================================
-#      """)
+print(f"""
+            =======================================
+                  NEURAL POPULATION ANALYZER
+            =======================================
+    [+] Population total            : {analyze_population_results['population_total']}
+    [+] Neuron types                : {analyze_population_results['neuron_types']}
+    [+] Neuron counts:
+                - Excitatory        : {analyze_population_results['neuron_counts']['excitatory']}
+                - Inhibitory        : {analyze_population_results['neuron_counts']['inhibitory']}
+                - Sensory           : {analyze_population_results['neuron_counts']['sensory']}
+                - Motor             : {analyze_population_results['neuron_counts']['motor']}
+            =======================================
+      """)
         
 # Exercise 8 - Neural Population Reporter
-#neural_data = " EXCITATORY, inhibitory, sensory, motor, inhibitory, sensory, excitatory, motor, inhibitory"
+neural_data = " EXCITATORY, inhibitory, sensory, motor, inhibitory, sensory, excitatory, motor, inhibitory"
 
-#def analyze_population(neural_data):
-#    neuron_list = neural_data.split(',')
-#    population_total = len(neuron_list)
-#    unique_neurons = dict()
-#    for neuron in neuron_list:
-#        neuron_cleaned = neuron.lower().strip()
-#        if neuron_cleaned in unique_neurons:
-#            unique_neurons[neuron_cleaned] += 1
-#        else:
-#            unique_neurons[neuron_cleaned] = 1
-#    neuron_types = len(unique_neurons)
-#    results = {
-#        'neuron_counts': unique_neurons,
-#        'population_total': population_total,
-#        'neuron_types': neuron_types
-#    }
-#    return results
-#
-#results = analyze_population(neural_data)
-#
-#def report_population(analyze_population_results):
-#    for neuron,counter in analyze_population_results['neuron_counts'].items():
-#        print(f"Neuron type: {neuron} → {counter}")
-#
-#report_population(results)
+def analyze_population(neural_data):
+    neuron_list = neural_data.split(',')
+    population_total = len(neuron_list)
+    unique_neurons = dict()
+    for neuron in neuron_list:
+        neuron_cleaned = neuron.lower().strip()
+        if neuron_cleaned in unique_neurons:
+            unique_neurons[neuron_cleaned] += 1
+        else:
+            unique_neurons[neuron_cleaned] = 1
+    neuron_types = len(unique_neurons)
+    results = {
+        'neuron_counts': unique_neurons,
+        'population_total': population_total,
+        'neuron_types': neuron_types
+    }
+    return results
+
+results = analyze_population(neural_data)
+
+def report_population(analyze_population_results):
+    for neuron,counter in analyze_population_results['neuron_counts'].items():
+        print(f"Neuron type: {neuron} → {counter}")
+
+report_population(results)
 
 # Exercise 9 - Neuron Signal Analyzer 
 # Create a function called analyze_neuron()
@@ -228,20 +228,20 @@ def get_neuron_info(neuron_type, firing_rate, signal_strength):
     # Once providing only neuron_type and firing_rate
 # Print both returned results
 
-#def analyze_neuron(neuron_type, firing_rate, signal_strength=50):
-#    thresholds = {
-#        "excitatory": 70,
-#        "inhibitory": 50 
-#    }
-#    if signal_strength >= thresholds[neuron_type]:
-#        return "strong"
-#    else:
-#        return "weak" 
-#
-#results = analyze_neuron(neuron_type="inhibitory",firing_rate=100, signal_strength=10)
-#print(results)
-#results = analyze_neuron(neuron_type="inhibitory",firing_rate=10)
-#print(results)
+def analyze_neuron(neuron_type, firing_rate, signal_strength=50):
+    thresholds = {
+        "excitatory": 70,
+        "inhibitory": 50 
+    }
+    if signal_strength >= thresholds[neuron_type]:
+        return "strong"
+    else:
+        return "weak" 
+
+results = analyze_neuron(neuron_type="inhibitory",firing_rate=100, signal_strength=10)
+print(results)
+results = analyze_neuron(neuron_type="inhibitory",firing_rate=10)
+print(results)
 
 # Exercise 10 - Neural Threshold Database
 # Create a function called classify_neuron()

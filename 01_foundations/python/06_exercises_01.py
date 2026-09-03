@@ -326,11 +326,3 @@ classification = classify_signal(neuron_type,signal_strength)
                    
 print(f"Neuron {neuron_type} → {classification}")
 
-neuron_types = ["excitatory","inhibitory","sensory","motor","interneuron"]
-
-for neuron in neuron_types:
-    if neuron == "excitatory":
-        print(neuron)
-    elif neuron == "inhibitory":
-        print(neuron)
-

@@ -191,6 +191,7 @@ original = {
     'key_2': True,
     'key_3': 30
 }  # → Creamos el dictionary original
+
 copied = original.copy()  # → Creamos una copia del dictionary
 print(original)  # → Mostramos el dictionary original
 print(copied)    # → Mostramos la copia

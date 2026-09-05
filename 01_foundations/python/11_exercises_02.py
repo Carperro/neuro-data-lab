@@ -158,3 +158,4 @@ def calculate_signal_statistics(neurons):
 results = calculate_signal_statistics(neurons)
 
 print(f"[!] The average signal is: {results[0]}\n[!] The weakest signal is: {results[1]}\n[!] The strongest signal is: {results[2]}")
+

@@ -194,31 +194,81 @@ threshold = -55
 # - the number of sensory neurons
 # Test the program with repeated neuron types, negative signal strengths, and a value greater than 100.
 
-neurons_counter = {
-    'excitatory': 0,
-    'inhibitory': 0,
-    'sensory': 0
-}
-valid_neurons = ('excitatory','inhibitory','sensory')
+#neurons_counter = {
+#    'excitatory': 0,
+#    'inhibitory': 0,
+#    'sensory': 0
+#}
+#valid_neurons = ('excitatory','inhibitory','sensory')
+#
+#while True:
+#    signal_strength = int(input('Enter a signal strength: '))
+#    neuron_type = input('Enter a neuron type: ').lower()
+#    if signal_strength < 0:                       
+#        continue
+#    if neuron_type in valid_neurons: 
+#        if 0 <= signal_strength <= 100:
+#            neurons_counter[neuron_type] += 1
+#        else:
+#            continue
+#    if signal_strength > 100:
+#        break           
+#total_valid_neurons = sum(neurons_counter.values()) # → La unica duda que tengo es la identación de esta variable, creo que debería estar por fuera del while.
+#print(f"""
+#      [*] Total of valid neurons = {total_valid_neurons} 
+#      [*] Total of excitatory neurons = {neurons_counter['excitatory']} 
+#      [*] Total of inhibitory neurons = {neurons_counter['inhibitory']} 
+#      [*] Total of sensory neurons = {neurons_counter['sensory']} 
+#      """)
 
-while True:
-    signal_strength = int(input('Enter a signal strength: '))
-    neuron_type = input('Enter a neuron type: ').lower()
-    if signal_strength < 0:                       
-        continue
-    if neuron_type in valid_neurons: 
-        if 0 <= signal_strength <= 100:
-            neurons_counter[neuron_type] += 1
-        else:
+# Exercise 11 — Neural Population Analysis
+# Create a function called analyze_population().
+# The function should receive a list of neuron records.
+# Each record should contain:
+# - a neuron type
+# - a signal strength
+# Analyze the population and determine:
+# - the total number of valid neurons
+# - the number of excitatory neurons
+# - the number of inhibitory neurons
+# - the number of sensory neurons
+# - the average signal strength of valid neurons
+# Ignore records with:
+# - an invalid neuron type
+# - a negative signal strength
+# Stop processing when a signal strength greater than 100 is encountered.
+# Return all results together in a structured form.
+# Test the function with at least fifteen neuron records, including valid records, invalid neuron types, negative signal strengths, and a signal greater than 100.
+neural_data = [("excitatory", 75),("inhibitory", 42),("sensory", 88),("excitatory", 63),("inhibitory", -10),("sensory", 91),("banana", 55),("excitatory", 100),("inhibitory", 37),("sensory", 64),("excitatory", 82),("invalid", 45),("inhibitory", 29),("sensory", -5),("excitatory", 71),("inhibitory", 56),("sensory", 110),("excitatory", 95)]
+# Counters and validation type
+def analyze_population(neural_data):
+    valid_neurons = ('excitatory','inhibitory','sensory')
+    neurons_counter = {'excitatory': 0,'inhibitory': 0,'sensory': 0}
+    for_average = []
+    for values in neural_data:
+        if values[0] not in valid_neurons:
             continue
-    if signal_strength > 100:
-        break
-            
-total_valid_neurons = sum(neurons_counter.values()) # → La unica duda que tengo es la identación de esta variable, creo que debería estar por fuera del while.
-print(f"""
-      [*] Total of valid neurons = {total_valid_neurons} 
-      [*] Total of excitatory neurons = {neurons_counter['excitatory']} 
-      [*] Total of inhibitory neurons = {neurons_counter['inhibitory']} 
-      [*] Total of sensory neurons = {neurons_counter['sensory']} 
-      """)
-    
+        elif values[1] < 0:
+            continue
+        neuron_type = values[0] 
+        signal_strength = values[1]
+        if signal_strength > 100:
+            break 
+        else:
+            neurons_counter[neuron_type] += 1
+            for_average.append(signal_strength)
+    number_of_each_neurons = neurons_counter['excitatory'], neurons_counter['sensory'], neurons_counter['inhibitory']
+    total_valid_neurons = sum(number_of_each_neurons)
+    average = sum(for_average) / total_valid_neurons
+    results = total_valid_neurons, average,number_of_each_neurons
+    return results
+results = analyze_population(neural_data)
+def presentation(results):
+    print(f'[!] The total valid neurons is: {results[0]}')
+    print(f'[!] The signal strength is: {results[1]}')
+    print(f'[!] The number of excitatory neurons is: {results[2][0]}')
+    print(f'[!] The number of sensory neurons is: {results[2][1]}')
+    print(f'[!] The number of inhibitory neurons is: {results[2][2]}')
+    return 
+presentation(results)
+                

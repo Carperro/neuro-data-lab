@@ -81,5 +81,4 @@ print(f'{type(map)}') # Corroboro que la lista esté igual
 # Do not modify the original list.
 
 neurons_procesed = list(sorted(map(lambda neuron:neuron['firing_rate'],filter(lambda neuron: neuron['firing_rate'] > 40, neurons)), reverse=True))
-
-print(neurons_procesed)
+numbers = [1,2,165,17,14,256,18,155,74,68]

@@ -242,33 +242,33 @@ threshold = -55
 neural_data = [("excitatory", 75),("inhibitory", 42),("sensory", 88),("excitatory", 63),("inhibitory", -10),("sensory", 91),("banana", 55),("excitatory", 100),("inhibitory", 37),("sensory", 64),("excitatory", 82),("invalid", 45),("inhibitory", 29),("sensory", -5),("excitatory", 71),("inhibitory", 56),("sensory", 110),("excitatory", 95)]
 # Counters and validation type
 def analyze_population(neural_data):
-    valid_neurons = ('excitatory','inhibitory','sensory')
+    valid_neurons = ('excitatory', 'inhibitory', 'sensory')
     neurons_counter = {'excitatory': 0,'inhibitory': 0,'sensory': 0}
-    for_average = []
+    signal_total = 0
     for values in neural_data:
+        if values[1] > 100:
+           break
+        if values[1] < 0:
+            continue
         if values[0] not in valid_neurons:
             continue
-        elif values[1] < 0:
-            continue
-        neuron_type = values[0] 
-        signal_strength = values[1]
-        if signal_strength > 100:
-            break 
-        else:
-            neurons_counter[neuron_type] += 1
-            for_average.append(signal_strength)
-    number_of_each_neurons = neurons_counter['excitatory'], neurons_counter['sensory'], neurons_counter['inhibitory']
-    total_valid_neurons = sum(number_of_each_neurons)
-    average = sum(for_average) / total_valid_neurons
-    results = total_valid_neurons, average,number_of_each_neurons
+        neurons_counter[values[0]] += 1
+        signal_total += values[1]
+    total_valid_neurons = sum(neurons_counter.values())
+    if total_valid_neurons == 0: # Manejamos el caso de: n/0
+        average = None
+    else:
+        average = signal_total / total_valid_neurons
+    results = total_valid_neurons,average,neurons_counter
     return results
 results = analyze_population(neural_data)
-def presentation(results):
-    print(f'[!] The total valid neurons is: {results[0]}')
-    print(f'[!] The signal strength is: {results[1]}')
-    print(f'[!] The number of excitatory neurons is: {results[2][0]}')
-    print(f'[!] The number of sensory neurons is: {results[2][1]}')
-    print(f'[!] The number of inhibitory neurons is: {results[2][2]}')
-    return 
-presentation(results)
+print(results)
+#def presentation(results):
+#    print(f'[!] The total valid neurons is: {results[0]}')
+#    print(f'[!] The signal strength is: {results[1]}')
+#    print(f'[!] The number of excitatory neurons is: {results[2][0]}')
+#    print(f'[!] The number of sensory neurons is: {results[2][1]}')
+#    print(f'[!] The number of inhibitory neurons is: {results[2][2]}')
+#    return 
+#presentation(results)
                 

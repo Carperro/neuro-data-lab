@@ -123,8 +123,8 @@ def analyze_neuron_types(neurons):                      # Definimos la función
         else:                                           # Si no está, creamos la entrada y le asignamos valor 1
             types_and_counter[neuron_types] = 1         # Aumentamos el value del tipo de neurona
     return types_and_counter                            # Retornamos el resultado
-results = analyze_neuron_types(neurons)                 # Llamamos a la función
-print(results)                                          # Imprimimos los resultados
+# results = analyze_neuron_types(neurons)                 # Llamamos a la función
+# print(results)                                          # Imprimimos los resultados
         
 # Exercise 3 - Neuron Signal Statistics
 
@@ -155,7 +155,181 @@ def calculate_signal_statistics(neurons):
     results = [average_signal, weakest_signal, strongest_signal]
     return results 
 
-results = calculate_signal_statistics(neurons)
+#results = calculate_signal_statistics(neurons)
+#print(f"[!] The average signal is: {results[0]}\n[!] The weakest signal is: {results[1]}\n[!] The strongest signal is: {results[2]}")
 
-print(f"[!] The average signal is: {results[0]}\n[!] The weakest signal is: {results[1]}\n[!] The strongest signal is: {results[2]}")
+# Exercise 4 - Integration Challenge — Neural Population Statistics
+# Create a function analyze_signals(neurons)
+# It should determine:
+    # - total number of neurons
+    # - average signal strength
+    # - weakest signal
+    # - strongest signal
+# Return all four results together.
+neurons = [
+    {"type": "excitatory", "signal_strength": 72},
+    {"type": "inhibitory", "signal_strength": 35},
+    {"type": "sensory", "signal_strength": 91},
+    {"type": "excitatory", "signal_strength": 64},
+    {"type": "inhibitory", "signal_strength": 58},
+    {"type": "sensory", "signal_strength": 47},
+]
 
+def analyze_signals(neurons):
+    str_sum = 0
+    for index,neuron in enumerate(neurons):
+        str_sum += neuron["signal_strength"]
+        if index == 0:
+            strongest = neuron["signal_strength"]  
+            weakest = neuron["signal_strength"] 
+        else:
+            if neuron["signal_strength"] > strongest:
+                strongest = neuron["signal_strength"]
+            if neuron["signal_strength"] < weakest:
+                weakest = neuron["signal_strength"]
+    results = {
+        "number_of_neurons": len(neurons),
+        "average_signal": round(str_sum / len(neurons),2),
+        "highest_signal": strongest,
+        "weakest_signal": weakest
+    }
+    return results
+    
+#analyzer_signals = analyze_signals(neurons)
+#print(analyzer_signals)
+    
+# Exercise 5 — Neuron Classification Pipeline
+# Create a function: classify_neuron(neuron)
+# It should return: 
+    # "strong" if signal_strength >= 70
+    # "weak" if signal_strength < 70
+    # "invalid" if the neuron_type is not excitatory, inhibitory or sensory
+# Then create: analyze_population(neurons)
+# This function should:
+    # Procces every neuron:
+    # Use classify_neuron() to classify it:
+    # Count:
+            # Total valid neurons
+            # Strong neurons
+            # Weaks neurons
+            # Invalid neurons
+    # Return all results in a dictionary.
+
+# Dataset: 
+neurons = [
+    {"type": "excitatory", "signal_strength": 72},
+    {"type": "inhibitory", "signal_strength": 35},
+    {"type": "sensory", "signal_strength": 91},
+    {"type": "excitatory", "signal_strength": 64},
+    {"type": "inhibitory", "signal_strength": 58},
+    {"type": "sensory", "signal_strength": 47},
+    {"type": "unknown", "signal_strength": 80},
+    {"type": "excitatory", "signal_strength": 105},
+]
+
+def classify_neuron(neuron):
+    valid_neurons = ["excitatory","inhibitory","sensory"]
+    if neuron["type"] in valid_neurons:
+        if neuron["signal_strength"] >= 70:
+            return "strong"
+        else:
+            return "weak"
+    else: return "invalid"
+
+def analyze_population(neurons):
+    strong_neurons = 0
+    invalid_neurons = 0
+    weak_neurons = 0
+    for neuron in neurons:
+        classifier = classify_neuron(neuron)
+        if classifier == "strong":
+            strong_neurons += 1
+        elif classifier == "invalid":
+            invalid_neurons += 1
+        else: 
+            weak_neurons += 1
+    result = {
+        "strong_neurons": strong_neurons,
+        "invalid_neurons": invalid_neurons,
+        "weak_neurons": weak_neurons,
+        "total_valid_neurons": (strong_neurons + weak_neurons)
+    }
+    return result
+
+#exercise_result = analyze_population(neurons)
+#print(exercise_result)
+
+# Exercise 6 - Neural Population Report
+# The function should return a dictionary containing:
+    # total number of neurons
+    # average signal strength
+    # strongest signal
+    # weakest signal
+    # number of neurons by type
+    # number of strong neurons
+    # number of weak neurons
+# Requirements
+    # Reuse classify_neuron().
+    # Use at least one helper function you've already created.
+    # Process the population with a loop.
+    # Return one structured dictionary.
+    # Do not use min(), max(), or sum() for the main analysis. Use the reasoning patterns we've been practicing.
+    
+neurons = [
+    {"type": "excitatory", "signal_strength": 72},
+    {"type": "inhibitory", "signal_strength": 35},
+    {"type": "sensory", "signal_strength": 91},
+    {"type": "excitatory", "signal_strength": 64},
+    {"type": "inhibitory", "signal_strength": 58},
+    {"type": "sensory", "signal_strength": 47},
+    {"type": "excitatory", "signal_strength": 83},
+    {"type": "inhibitory", "signal_strength": 76},
+    {"type": "sensory", "signal_strength": 29},
+]
+
+def neural_population_report(neurons):
+    signals = []
+    total_signals = 0
+    counter_by_type = {
+        "excitatory": 0,
+        "inhibitory": 0,
+        "sensory": 0,
+    }
+    counter_by_classify = {
+        "weaks": 0,
+        "strongs": 0,
+    }
+    for neuron in neurons:
+        neuron_classified = classify_neuron(neuron)
+        if neuron_classified == "invalid":
+            continue
+        total_signals += neuron["signal_strength"]
+        signals.append(neuron["signal_strength"])
+        if neuron_classified == "invalid":
+            continue
+        if neuron_classified == "weak":
+            counter_by_classify["weaks"] += 1
+        else:
+            counter_by_classify["strongs"] += 1
+
+        if neuron["type"] == "sensory":
+            counter_by_type["sensory"] += 1
+        elif neuron["type"] == "excitatory":
+            counter_by_type["excitatory"] += 1
+        else:
+            counter_by_type["inhibitory"] += 1
+    signal_sorted = sorted(signals)
+    
+    to_output = {
+        "total_neurons": len(neurons),
+        "average_signal": total_signals/len(neurons),
+        "strongest_signal": signal_sorted[-1],
+        "weakest_signal": signal_sorted[0],
+        "n_neurons_by_type":counter_by_type,
+        "n_strong_neurons": counter_by_classify["strongs"],
+        "n_weak_neurons": counter_by_classify["weaks"],
+    }
+    return to_output
+
+resultados = neural_population_report(neurons)
+print(resultados)

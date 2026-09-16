@@ -54,203 +54,138 @@ neuron_types_allowed = {"excitatory","inhibitory","sensory"}
 # VALIDATE DATA
 # ===================================================
 def validation(neural_data):
-    # Guardamos los registros válidos.
-    valid_neurons = []
-    # Guardamos los registros inválidos.
-    invalid_population = []
-    # Revisamos cada registro del dataset.
-    for neuron in neural_data:
-        # Extraemos sus dos valores.
-        neuron_type = neuron[0]
+    valid_neurons = []                                  # Guardamos los registros válidos.
+    invalid_population = []                             # Guardamos los registros inválidos.
+    for neuron in neural_data:                          # Revisamos cada registro del dataset.
+        neuron_type = neuron[0]                         # Extraemos sus dos valores.
         signal_strength = neuron[1]
-        # Un registro es válido si cumple ambas reglas.
-        if (neuron_type in neuron_types_allowed and 0 < signal_strength <= 100):
-            # Guardamos el registro válido.
-            valid_neurons.append(neuron)
+        if (neuron_type in neuron_types_allowed and 0 < signal_strength <= 100):            # Un registro es válido si cumple ambas reglas.
+            valid_neurons.append(neuron)                # Guardamos el registro válido.
         else:
-            # Conservamos los registros inválidos.
-            invalid_population.append(neuron)
-    # Devolvemos ambas poblaciones.
-    return valid_neurons, invalid_population
-# Ejecutamos la validación.
-neural_population = validation(neural_data)
+            invalid_population.append(neuron)           # Conservamos los registros inválidos.
+    return valid_neurons, invalid_population            # Devolvemos ambas poblaciones.
+neural_population = validation(neural_data)             # Ejecutamos la validación.
 # ===================================================
 # CLASSIFY SIGNAL STRENGTH
 # ===================================================
 def classify_strength(signal_strength):
-    # Clasificamos la señal según nuestro umbral.
-    if signal_strength > 70:
+    if signal_strength > 70:                            # Clasificamos la señal según nuestro umbral.
         return "strong"
     return "weak"
 # ===================================================
 # GET INVALID REASONS
 # ===================================================
 def get_invalid_reasons(neuron_type, signal_strength):
-    # Empezamos con una lista vacía de problemas.
     reasons = []
-    # Comprobamos si el tipo no está permitido.
-    if neuron_type not in neuron_types_allowed:
+    if neuron_type not in neuron_types_allowed:         # Comprobamos si el tipo no está permitido.
         reasons.append("invalid neuron type")
-    # Comprobamos si la señal es demasiado baja.
-    if signal_strength <= 0:
+    if signal_strength <= 0:                            # Comprobamos si la señal es demasiado baja.
         reasons.append("signal too low")
-    # Comprobamos si la señal es demasiado alta.
-    if signal_strength > 100:
+    if signal_strength > 100:                           # Comprobamos si la señal es demasiado alta.
         reasons.append("signal too high")
-    # Devolvemos todas las razones encontradas.
-    return reasons
+    return reasons                                      # Devolvemos todas las razones encontradas.
 # ===================================================
 # ENRICH INDIVIDUAL DATA
 # ===================================================
 def enrich_neuron(neuron, invalid=False):
-    # Extraemos los datos originales.
-    neuron_type = neuron[0]
+    neuron_type = neuron[0]                             # Extraemos los datos originales.
     signal_strength = neuron[1]
-    # Creamos la información enriquecida.
-    neuron_info = {
+    neuron_info = {                                     # Creamos la información enriquecida.
         "neuron_type": neuron_type,
         "signal_strength": signal_strength,
         "strength": classify_strength(signal_strength)
     }
-    # Los registros inválidos necesitan además
-    # conocer las razones de invalidación.
-    if invalid:
+    if invalid:                                         # Los registros inválidos necesitan además conocer las razones de invalidación.
         neuron_info["reasons"] = get_invalid_reasons(neuron_type,signal_strength)
-    # Devolvemos la neurona enriquecida.
-    return neuron_info
+    return neuron_info                                  # Devolvemos la neurona enriquecida.
 # ===================================================
 # ANALYZE INDIVIDUAL NEURONS
 # ===================================================
 def analyze_population(neural_population):
-    # Separamos las dos poblaciones.
-    valid_population = neural_population[0]
-    invalid_population = neural_population[1]
-    # Guardamos la información enriquecida de las válidas.
-    info_valid_neurons = []
-    # Guardamos la información enriquecida de las inválidas.
-    info_invalid_neurons = []
-    # Procesamos cada neurona válida.
-    for neuron in valid_population:
-        # Enriquecemos el registro.
-        neuron_info = enrich_neuron(neuron)
-        # Guardamos el resultado.
-        info_valid_neurons.append(neuron_info)
-    # Procesamos cada neurona inválida.
-    for neuron in invalid_population:
-        # Enriquecemos el registro y calculamos sus razones.
-        neuron_info = enrich_neuron(neuron,invalid=True)
-        # Guardamos el resultado.
-        info_invalid_neurons.append(neuron_info)
-
-    # Construimos la salida estructurada.
-    analysis = {
+    valid_population = neural_population[0]                 # Separamos las dos poblaciones.    
+    invalid_population = neural_population[1]               
+    info_valid_neurons = []                                 # Guardamos la información enriquecida de las válidas.
+    info_invalid_neurons = []                               # Guardamos la información enriquecida de las inválidas.
+    for neuron in valid_population:                         # Procesamos cada neurona válida.
+        neuron_info = enrich_neuron(neuron)                 # Enriquecemos el registro.
+        info_valid_neurons.append(neuron_info)              # Guardamos el resultado.
+    for neuron in invalid_population:                       # Procesamos cada neurona inválida.
+        neuron_info = enrich_neuron(neuron,invalid=True)    # Enriquecemos el registro y calculamos sus razones.
+        info_invalid_neurons.append(neuron_info)            # Guardamos el resultado.
+    analysis = {                                            # Construimos la salida estructurada.    
         "valid_population": info_valid_neurons,
         "invalid_population": info_invalid_neurons,
         "valid_count": len(info_valid_neurons),
         "invalid_count": len(info_invalid_neurons)
     }
-
-    # Devolvemos la información enriquecida.
-    return analysis
-# Ejecutamos el análisis individual.
-analyze_population_report = analyze_population(neural_population)
+    return analysis                                         # Devolvemos la información enriquecida.
+analyze_population_report = analyze_population(neural_population)        # Ejecutamos el análisis individual.
 # ===================================================
 # SIGNAL STATISTICS
 # ===================================================
 def signal_statistics(signals):
-    # Si no existen señales, evitamos errores matemáticos.
-    if not signals:
+    if not signals:                                         # Si no existen señales, evitamos errores matemáticos.
         return {
             "sum": 0,
             "average": None,
             "highest": None,
             "lowest": None
         }
-    # Calculamos la suma.
-    signal_sum = sum(signals)
-    # Calculamos el promedio.
-    signal_average = round(signal_sum / len(signals),2)
-    # Buscamos la señal más alta.
-    highest_signal = max(signals)
-    # Buscamos la señal más baja.
-    lowest_signal = min(signals)
-    # Devolvemos todas las estadísticas.
-    return {"sum": signal_sum,"average": signal_average,"highest": highest_signal,"lowest": lowest_signal}
+    signal_sum = sum(signals)                               # Calculamos la suma.
+    signal_average = round(signal_sum / len(signals),2)     # Calculamos el promedio.
+    highest_signal = max(signals)                           # Buscamos la señal más alta.
+    lowest_signal = min(signals)                            # Buscamos la señal más baja.
+    return {"sum": signal_sum,"average": signal_average,"highest": highest_signal,"lowest": lowest_signal}      # Devolvemos todas las estadísticas.
 # ===================================================
 # SPLIT SIGNALS BY STRENGTH
 # ===================================================
 def split_by_strength(population):
-    # Lista con todos los signals.
-    signals = []
-    # Signals strong.
-    strong_signals = []
-    # Signals weak.
-    weak_signals = []
-    # Recorremos cada neurona.
-    for neuron in population:
-        # Extraemos signal.
-        signal_strength = neuron["signal_strength"]
-        # Guardamos el signal general.
-        signals.append(signal_strength)
-        # Separamos según la clasificación ya calculada.
-        if neuron["strength"] == "strong":
+    signals = []                                            # Lista con todos los signals.
+    strong_signals = []                                     # Signals strong.        
+    weak_signals = []                                       # Signals weak.
+    for neuron in population:                               # Recorremos cada neurona.    
+        signal_strength = neuron["signal_strength"]         # Extraemos signal.
+        signals.append(signal_strength)                     # Guardamos el signal general.    
+        if neuron["strength"] == "strong":                  # Separamos según la clasificación ya calculada.
             strong_signals.append(signal_strength)
         else:
-            weak_signals.append(signal_strength)
-    # Devolvemos las tres colecciones.
-    return signals, strong_signals, weak_signals
+            weak_signals.append(signal_strength)                
+    return signals, strong_signals, weak_signals            # Devolvemos las tres colecciones.
 # ===================================================
 # GROUP BY NEURON TYPE
 # ===================================================
 def group_by_type(population):
-    # Empezamos con un diccionario vacío.
-    groups = {}
-    # Recorremos la población.
-    for neuron in population:
-        # Extraemos el tipo.
-        neuron_type = neuron["neuron_type"]
-        # Si el tipo todavía no existe, creamos su lista.
-        if neuron_type not in groups:
+    groups = {}                                             # Empezamos con un diccionario vacío.
+    for neuron in population:                               # Recorremos la población.
+        neuron_type = neuron["neuron_type"]                 # Extraemos el tipo.    
+        if neuron_type not in groups:                       # Si el tipo todavía no existe, creamos su lista.
             groups[neuron_type] = []
-        # Guardamos la neurona en su grupo.
-        groups[neuron_type].append(neuron)
-    # Devolvemos los grupos.
-    return groups
+        groups[neuron_type].append(neuron)                  # Guardamos la neurona en su grupo.
+    return groups                                           # Devolvemos los grupos.
 # ===================================================
 # COUNT INVALID REASONS
 # ===================================================
 def count_reasons(population):
-    # Diccionario para acumular cada problema.
-    reasons_count = {}
-    # Recorremos los registros inválidos.
-    for neuron in population:
-        # Cada neurona puede tener más de una razón.
-        for reason in neuron.get("reasons", []):
-            # Si es la primera aparición, empezamos en cero.
-            if reason not in reasons_count:
+    reasons_count = {}                                   # Diccionario para acumular cada problema.
+    for neuron in population:                            # Recorremos los registros inválidos.
+        for reason in neuron.get("reasons", []):         # Cada neurona puede tener más de una razón.
+            if reason not in reasons_count:              # Si es la primera aparición, empezamos en cero.
                 reasons_count[reason] = 0
-            # Sumamos una aparición.
-            reasons_count[reason] += 1
-    # Devolvemos el conteo.
-    return reasons_count
+            reasons_count[reason] += 1                   # Sumamos una aparición.
+    return reasons_count                                 # Devolvemos el conteo.
 # ===================================================
 # POPULATION ANALYSIS
 # ===================================================
 def population_analyzer(analyze_population_report):
-    # Recuperamos las poblaciones enriquecidas.
-    valid_population_data = (analyze_population_report["valid_population"])
+    valid_population_data = (analyze_population_report["valid_population"])         # Recuperamos las poblaciones enriquecidas.
     invalid_population_data = (analyze_population_report["invalid_population"])
     # ---------------------------------------------------
     # GLOBAL DATA
     # ---------------------------------------------------
-    # Cantidad total de registros.
-    total_records = (len(valid_population_data)+ len(invalid_population_data))
-    # Cantidad válida.
-    valid_count = len(valid_population_data)
-    # Cantidad inválida.
-    invalid_count = len(invalid_population_data)
-    # Calculamos los porcentajes globales.
-    if total_records:
+    total_records = (len(valid_population_data)+ len(invalid_population_data))      # Cantidad total de registros.
+    valid_count = len(valid_population_data)                                        # Cantidad válida.
+    invalid_count = len(invalid_population_data)                                    # Cantidad inválida.
+    if total_records:                                                               # Calculamos los porcentajes globales.        
         valid_percentage = round((valid_count / total_records) * 100,2)
         invalid_percentage = round((invalid_count / total_records) * 100,2)
     else:
@@ -259,46 +194,28 @@ def population_analyzer(analyze_population_report):
     # ---------------------------------------------------
     # VALID POPULATION
     # ---------------------------------------------------
-
-    # Extraemos signals y los separamos por strength.
-    (valid_signals,valid_strong_signals,valid_weak_signals) = split_by_strength(valid_population_data)
-
-    # Agrupamos las válidas por neuron type.
-    valid_by_type = group_by_type(valid_population_data)
-    # Calculamos estadísticas de signals válidos.
-    valid_stats = signal_statistics(valid_signals)
-
+    (valid_signals,valid_strong_signals,valid_weak_signals) = split_by_strength(valid_population_data)     # Extraemos signals y los separamos por strength.
+    valid_by_type = group_by_type(valid_population_data)                             # Agrupamos las válidas por neuron type.           
+    valid_stats = signal_statistics(valid_signals)                                   # Calculamos estadísticas de signals válidos.
     # ---------------------------------------------------
     # INVALID POPULATION
     # ---------------------------------------------------
-
-    # Extraemos signals inválidos y los clasificamos.
-    (invalid_signals,invalid_strong_signals,invalid_weak_signals) = split_by_strength(invalid_population_data)
-
-    # Agrupamos las inválidas por neuron type.
-    invalid_by_type = group_by_type(invalid_population_data)
-
-    # Contamos las razones de invalidación.
-    invalid_reasons = count_reasons(invalid_population_data)
-
-    # Calculamos estadísticas de signals inválidos.
-    invalid_stats = signal_statistics(invalid_signals)
-
+    (invalid_signals,invalid_strong_signals,invalid_weak_signals) = split_by_strength(invalid_population_data) # Extraemos signals inválidos y los clasificamos.
+    invalid_by_type = group_by_type(invalid_population_data)                         # Agrupamos las inválidas por neuron type.
+    invalid_reasons = count_reasons(invalid_population_data)                         # Contamos las razones de invalidación.
+    invalid_stats = signal_statistics(invalid_signals)                               # Calculamos estadísticas de signals inválidos.
     # ---------------------------------------------------
     # FINAL RESULT
     # ---------------------------------------------------
-    # Construimos el resultado final.
-    analysis = {
-        # Información global.
-        "global": {
+    analysis = {                                                # Construimos el resultado final.
+        "global": {                                             # Información global.
             "total_records": total_records,
             "valid_count": valid_count,
             "invalid_count": invalid_count,
             "valid_percentage": valid_percentage,
             "invalid_percentage": invalid_percentage
         },
-        # Información de válidas.
-        "valid": {
+        "valid": {                                              # Información de válidas.    
             "neurons": valid_population_data,
             "signals": valid_signals,
             "strong_signals": valid_strong_signals,
@@ -311,8 +228,7 @@ def population_analyzer(analyze_population_report):
             "highest_signal": valid_stats["highest"],
             "lowest_signal": valid_stats["lowest"]
         },
-        # Información de inválidas.
-        "invalid": {
+        "invalid": {                                            # Información de inválidas.
             "neurons": invalid_population_data,
             "signals": invalid_signals,
             "strong_signals": invalid_strong_signals,
@@ -327,20 +243,22 @@ def population_analyzer(analyze_population_report):
             "lowest_signal": invalid_stats["lowest"]
         }
     }
-    # Devolvemos todo el análisis.
-    return analysis
-# ===================================================
-# RUN FINAL ANALYSIS
-# ===================================================
-# Analizamos ambas poblaciones.
-result = population_analyzer(analyze_population_report)
-# ===================================================
-# TEMPORARY TEST
-# ===================================================
-# Por ahora solamente comprobamos el resultado.
+    return analysis                                             # Devolvemos todo el análisis.
+
+result = population_analyzer(analyze_population_report)         # Analizamos ambas poblaciones.    
+
+def average_calculator(population):                             # Extraemos el promedio de las señales de cada población
+    signals = []
+    for signal in population:
+        signals.append(signal["signal_strength"])
+    if not signals:
+        return
+    average = sum(signals) / len(signals)
+    return average
+
 print(result)
 
-
+# Luego volveremos para ir refactorizando el código y hacer un programa funcional
 
 
 

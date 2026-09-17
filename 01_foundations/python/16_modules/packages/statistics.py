@@ -8,5 +8,10 @@ def calculate_statistics(numbers):
     highest_value = numbers[-1]    
     lowest_value = numbers[0]    
     average = total / len(numbers)
-    results = average, highest_value, lowest_value, total
+    results = {
+        "average": average,
+        "highest_value": highest_value,
+        "lowest_value": lowest_value,
+        "total": total
+        }
     return results

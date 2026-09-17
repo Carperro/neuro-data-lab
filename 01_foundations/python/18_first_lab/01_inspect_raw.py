@@ -73,10 +73,12 @@ with open('01_foundations/python/18_first_lab/data/sleep/raw/SN007_sleepscoring.
     test = 0
     for value in rec_onset_values:
         print(value)
-        test += 1[]
-        if test # aca nos quedamos 
-    
-    print(len(rec_onset_values))                      # Mostramos la cantidad de apariciones de cada valor de Duration
+        test += 1
+        if test == 10:
+            break 
+
+
+    # print(len(rec_onset_values))                      # Mostramos la cantidad de apariciones de cada valor de Duration
     
 # Siguiente columna: Recording onset
-    
+   
